@@ -1,0 +1,7 @@
+fdic_ews:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: ../data/fdic.duckdb
+      threads: 4

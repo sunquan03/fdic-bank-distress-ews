@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: fdic_raw
+    description: Raw FDIC BankFind API pulls, landed as Parquet by src/main.py.
+    meta:
+      external_location: "../data/raw/{name}/*.parquet"
+    tables:
+      - name: financials
+        description: One file per quarter. Grain = bank x quarter.
+      - name: institutions
+        description: Snapshot of every insured institution. One file per ingest date.
+      - name: failures
+        description: Every FDIC-insured failure since 1934. One file per ingest date.
+      - name: history
+        description: Mergers, name changes, charter changes. One file per ingest date.
