@@ -110,8 +110,7 @@ async def main():
     ) as client:
         for source in SOURCES:
             if source.name == "financials":
-                continue
-            await ingest_source(client, source)
+                await ingest_source(client, source)
 
 if __name__ == "__main__":
     asyncio.run(main())
