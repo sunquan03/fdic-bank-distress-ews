@@ -35,11 +35,11 @@ renamed as (
         BIDSTATE                                            as acquirer_state,
 
         -- money
-        QBFDEP                                              as deposits_at_failure,
-        QBFASSET                                            as assets_at_failure,
-        nullif(UNINSDEP, '')                                as uninsured_deposits,
-        COST                                                as estimated_loss,
-        
+        try_cast(QBFDEP as decimal(18,2))                   as deposits_at_failure,
+        try_cast(QBFASSET as decimal(18,2))                 as assets_at_failure,
+        try_cast(nullif(UNINSDEP, '') as decimal(18,2))     as uninsured_deposits,
+        try_cast(COST as decimal(18,2))                     as estimated_loss,
+
         try_strptime(COSTMOSTRECENTASOF, '%Y-%m-%d')::date  as estimated_loss_as_of_date,
 
         -- to check
