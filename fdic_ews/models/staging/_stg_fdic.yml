@@ -32,3 +32,11 @@ models:
       - name: bank_name
         tests:
           - not_null
+  - name: stg_fdic__history
+    columns:
+      - name: transaction_number
+        tests:
+          - unique
+          - not_null
+
+
