@@ -11,7 +11,7 @@ renamed as (
     INSTNAME                                                                            as bank_name,
 
     CHANGECODE	                                                                        as change_code,
-    CHANGECODE_DESC                                                                     as change_code_desc,
+    CHANGECODE_DESC                                                                     as change_desc,
     try_strptime(EFFDATE, '%Y-%m-%dT%H:%M:%S')::date                                    as effective_date,
     ORG_ROLE_CDE                                                                        as org_role_code,
     ACQ_CERT                                                                            as acquirer_cert, 
