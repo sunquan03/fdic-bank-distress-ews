@@ -1,0 +1,42 @@
+change_code,exit_type,description
+1,not_exit,History Record Initiation
+110,not_exit,New Institution
+150,not_exit,Cert Changed from Old Cert by Administrative Order
+211,failure,Failure - Whole Institution
+213,assisted,Merger - Assisted
+215,failure,Failure Multiple Acquirer
+216,failure,Bridge Bank Resolution
+217,failure,Passthrough Receivorship/Conservatorship Resolution
+221,ordinary,Absorbtion - Without Assistance
+222,ordinary,Consolidated - Without Assistance
+223,ordinary,Merger -Without Assistance
+224,assisted,Affiliated Institution Merger (Pooling) (i.e. Corporate Reorganization
+225,ordinary,Partial Purchase & Assumption - Without Assistance
+230,failure,Closing - Failure Payoff
+235,failure,Rtc Supervised Payoffs, Liquidations, and Closings
+240,ordinary,Closing - Voluntary
+260,failure,Bank Closed by Chartering Agency Pending Sale
+310,not_exit,Institution Becomes a Member of FRS (Federal Reserve System)
+320,not_exit,Institution Withdraws from FRS (Federal Reserve System)
+340,not_exit,Institution Withdraws from FHS
+350,assisted,Institution Enters Conservatorship
+360,not_exit,Conservatorship Institution Resolved
+410,not_exit,Change in Insurance Status - ONI Becomes Insured
+420,not_exit,Change in Chartering Agency
+430,not_exit,Change in Class
+440,not_exit,Change in Organization Type
+470,not_exit,Change in Primary Regulatory Agency
+510,not_exit,Change in Legal Name (FO or BR)
+520,not_exit,Change in Physical Location (FO or BR)
+610,not_exit,Trust Powers Granted
+711,not_exit,Branch Opening
+712,not_exit,Branch Purchased
+713,not_exit,Branch Acquired in Merger/Consolidation/Failure
+721,not_exit,Branch Closing
+722,not_exit,Branch Sold
+724,not_exit,Branches Divested in Multiple Acquirer Failure
+810,not_exit,Participated in Absorbtion/Consolidation/Merger
+811,not_exit,Participated in FDIC Assisted Merger
+812,not_exit,Rtc Assisted Merger
+820,not_exit,Phantom (Interim) Corporate Reorganization
+830,assisted,Open Bank Assistance
