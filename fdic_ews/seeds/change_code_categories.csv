@@ -10,7 +10,7 @@ change_code|exit_type|description
 221|ordinary|Absorbtion - Without Assistance
 222|ordinary|Consolidated - Without Assistance
 223|ordinary|Merger -Without Assistance
-224|assisted|Affiliated Institution Merger (Pooling) (i.e. Corporate Reorganization
+224|ordinary|Affiliated Institution Merger (Pooling) (i.e. Corporate Reorganization
 225|ordinary|Partial Purchase & Assumption - Without Assistance
 230|failure|Closing - Failure Payoff
 235|failure|Rtc Supervised Payoffs, Liquidations, and Closings
