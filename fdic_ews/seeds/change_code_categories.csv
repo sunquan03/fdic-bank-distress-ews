@@ -2,24 +2,24 @@ change_code|exit_type|description
 1|not_exit|History Record Initiation
 110|not_exit|New Institution
 150|not_exit|Cert Changed from Old Cert by Administrative Order
-211|not_exit|Failure - Whole Institution
-213|not_exit|Merger - Assisted
-215|not_exit|Failure Multiple Acquirer
-216|not_exit|Bridge Bank Resolution
-217|not_exit|Passthrough Receivorship/Conservatorship Resolution
-221|not_exit|Absorbtion - Without Assistance
-222|not_exit|Consolidated - Without Assistance
-223|not_exit|Merger -Without Assistance
-224|not_exit|Affiliated Institution Merger (Pooling) (i.e. Corporate Reorganization)
-225|not_exit|Partial Purchase & Assumption - Without Assistance
-230|not_exit|Closing - Failure Payoff
-235|not_exit|Rtc Supervised Payoffs, Liquidations, and Closings
-240|not_exit|Closing - Voluntary
-260|not_exit|Bank Closed by Chartering Agency Pending Sale
+211|failure|Failure - Whole Institution
+213|assisted|Merger - Assisted
+215|failure|Failure Multiple Acquirer
+216|failure|Bridge Bank Resolution
+217|failure|Passthrough Receivorship/Conservatorship Resolution
+221|ordinary|Absorbtion - Without Assistance
+222|ordinary|Consolidated - Without Assistance
+223|ordinary|Merger -Without Assistance
+224|assisted|Affiliated Institution Merger (Pooling) (i.e. Corporate Reorganization
+225|ordinary|Partial Purchase & Assumption - Without Assistance
+230|failure|Closing - Failure Payoff
+235|failure|Rtc Supervised Payoffs, Liquidations, and Closings
+240|ordinary|Closing - Voluntary
+260|failure|Bank Closed by Chartering Agency Pending Sale
 310|not_exit|Institution Becomes a Member of FRS (Federal Reserve System)
 320|not_exit|Institution Withdraws from FRS (Federal Reserve System)
 340|not_exit|Institution Withdraws from FHS
-350|not_exit|Institution Enters Conservatorship
+350|assisted|Institution Enters Conservatorship
 360|not_exit|Conservatorship Institution Resolved
 410|not_exit|Change in Insurance Status - ONI Becomes Insured
 420|not_exit|Change in Chartering Agency
@@ -39,4 +39,4 @@ change_code|exit_type|description
 811|not_exit|Participated in FDIC Assisted Merger
 812|not_exit|Rtc Assisted Merger
 820|not_exit|Phantom (Interim) Corporate Reorganization
-830|not_exit|Open Bank Assistance
+830|assisted|Open Bank Assistance
