@@ -1,0 +1,16 @@
+version: 2
+
+seeds:
+  - name: change_code_categories
+    config:
+      delimiter: "|"
+    columns:
+      - name: change_code
+        tests:
+          - unique
+          - not_null
+      - name: exit_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['failure', 'assisted', 'ordinary', 'not_exit']
