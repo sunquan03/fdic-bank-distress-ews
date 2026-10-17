@@ -1,0 +1,29 @@
+version: 2
+
+models:
+  - name: int_bank_exits
+    columns:
+      - name: cert
+        data_tests: 
+          - unique
+          - not_null
+      - name: exit_date
+        data_tests:
+          - not_null        
+      - name: exit_type
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['failure', 'ordinary', 'assisted'] 
+  - name: int_bank_quarters
+    columns: 
+      - name: cert
+        data_tests:
+          - not_null
+      - name: bank_quarter_id
+        data_tests:
+          - unique
+          - not_null
+      - name: report_date
+        data_tests:
+          - not_null
