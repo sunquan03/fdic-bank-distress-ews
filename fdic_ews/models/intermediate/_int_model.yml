@@ -49,3 +49,15 @@ models:
               arguments:
                 values: [0, 1]
                 quote: false
+  - name: int_bank_quarter_features
+    columns: 
+      - name: cert
+        data_tests:
+          - not_null
+      - name: bank_quarter_id
+        data_tests:
+          - unique
+          - not_null
+      - name: report_date
+        data_tests:
+          - not_null
