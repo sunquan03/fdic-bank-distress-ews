@@ -61,3 +61,9 @@ models:
       - name: report_date
         data_tests:
           - not_null
+  - name: total_risk_based_capital_pct
+    data_tests:
+      - dbt_utils.accepted_range:
+          arguments:
+            min_value: 0
+            inclusive: false
