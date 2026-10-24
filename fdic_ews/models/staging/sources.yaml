@@ -4,7 +4,7 @@ sources:
   - name: fdic_raw
     description: Raw FDIC BankFind API pulls, landed as Parquet by src/main.py.
     meta:
-      external_location: "../data/raw/{name}/*.parquet"
+      external_location: "read_parquet('../data/raw/{name}/*.parquet', union_by_name=true)"
     tables:
       - name: financials
         description: One file per quarter. Grain = bank x quarter.
