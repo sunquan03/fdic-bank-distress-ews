@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: fct_bank_quarter_training
+    columns:
+      - name: cert
+        data_tests:
+          - not_null
+      - name: bank_quarter_id
+        data_tests:
+          - not_null
+          - unique
+      - name: failure_in_year
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: [0, 1]
+                quote: false
