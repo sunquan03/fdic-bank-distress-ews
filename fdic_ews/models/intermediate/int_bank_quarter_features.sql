@@ -3,6 +3,7 @@ with ratios as (
     f.cert,
     f.report_date,
     f.bank_quarter_id,
+    case when f.gross_loans > 0 then 1 else 0 end as has_loans,
     case when f.community_bank_leverage_ratio_flag = 1 or  f.total_risk_based_capital_pct = 0 then null
     else f.total_risk_based_capital_pct end as total_risk_based_capital_pct,
     f.nonperforming_assets_to_assets_pct,
@@ -41,6 +42,7 @@ select
     r.cert,
     r.report_date,
     r.bank_quarter_id,
+    r.has_loans,
     r.total_risk_based_capital_pct,
     r.nonperforming_assets_to_assets_pct,
     r.loan_loss_allowance_to_loans_pct,

@@ -22,3 +22,4 @@ select
 from {{ ref('int_bank_quarter_features') }} f
 join {{ ref('int_bank_quarter_labels') }} l on f.bank_quarter_id = l.bank_quarter_id
 where l.failure_in_year is not null
+  and f.has_loans > 0
