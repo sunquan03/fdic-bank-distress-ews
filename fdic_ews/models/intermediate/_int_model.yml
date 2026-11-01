@@ -72,3 +72,7 @@ models:
               arguments:
                 values: [0, 1]
                 quote: false
+      - name: leverage_ratio_pct
+        data_tests:
+          - dbt_utils.expression_is_true:
+              expression: "<> 0"

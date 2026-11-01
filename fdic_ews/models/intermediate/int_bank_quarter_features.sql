@@ -11,7 +11,7 @@ with ratios as (
     f.roa_pct,
     f.net_interest_margin_pct,
     f.efficiency_ratio_pct,
-    f.leverage_ratio_pct,
+    case when f.leverage_ratio_pct = 0 then null else f.leverage_ratio_pct end as leverage_ratio_pct,
     f.brokered_deposits / nullif(f.total_deposits, 0) * 100 as brokered_deposits_pct,
     f.core_deposits / nullif(f.total_assets, 0) * 100 as core_deposits_pct,
     f.fhlb_advances / nullif(f.total_assets, 0) * 100 as fhlb_advances_to_assets_pct,
