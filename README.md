@@ -37,9 +37,31 @@ Of the 1 109 failing bank-quarters, 128 had leverage at or above 5%.
 
 | Extra visits (share of these banks) | Failures found | Found, % of 128 | Precision | Lift vs. random |
 |---|---|---|---|---|
-| 896 (0.25%) | 36 | 28.1% | 4.02% | 113× |
+| 896 (0.25%) | 36 | 28.1% | 4.02% | x113 |
 | **1,793 (0.5%)** | **49** | **38.3%** | **2.73%** | **x77** |
-| 3,587 (1%) | 57 | 44.5% | 1.59% | 45× |
-| 7,174 (2%) | 65 | 50.8% | 0.91% | 25× |
+| 3,587 (1%) | 57 | 44.5% | 1.59% | x45 |
+| 7,174 (2%) | 65 | 50.8% | 0.91% | x25 |
 
 Returns diminish quickly after 0.5%. The recommended system is the rule plus the model's top 0.5%: 5 499 visits, 1 030 of 1 109 failures (92.9%), against 88.5% for the rule alone.
+
+### What drives the model
+
+Standardized logistic regression weights (+ = more risk). Leverage dominates. Capital structure and asset quality features follow and the signs match banking intuition:
+
+| Feature | Weight |
+|---|---|
+| leverage ratio | -2.20 |
+| leverage below 5% (flag) | +0.91 |
+| core deposits / assets | -0.46 |
+| nonperforming assets / assets | +0.37 |
+| construction loan concentration | +0.28 |
+| ROA | -0.26 |
+| brokered deposits / deposits | +0.20 |
+
+### Charts
+
+![Recall comparison](reports/figures/01_recall_comparison.png)
+
+![Lead time](reports/figures/02_lead_time.png)
+
+![Second net](reports/figures/03_second_net.png)
