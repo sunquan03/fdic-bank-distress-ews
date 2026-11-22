@@ -65,3 +65,23 @@ Standardized logistic regression weights (+ = more risk). Leverage dominates. Ca
 ![Lead time](reports/figures/02_lead_time.png)
 
 ![Second net](reports/figures/03_second_net.png)
+
+
+
+---
+
+## Today's watch list (2026-06-30 reports)
+
+Each quarter the project produces a short list of banks for supervisors to review: banks below the 5% capital line (the rule), plus the riskiest 0.5% of banks the rule considers safe (the model). Every bank gets a top_driver, the feature that pushes its risk up the most, with a direction ("high nonperforming assets", "low core deposits"), so a supervisor knows where to start.
+
+| | Banks |
+|---|---|
+| Lending banks scored | 4 223 |
+| Flagged by the rule (leverage < 5%) | 5 |
+| Added by the model (top 0.5% of the rest) | 21 |
+| **Watch list** | **26** |
+
+Highest risk: Lamont Bank of St. John (WA): leverage 2.95% and high nonperforming assets, model risk 44%. Some rule-flagged banks score low on the model (under 1%): their capital is thin, but profitability, deposits and asset quality look healthy.
+
+Full list: [`reports/watchlist_latest.csv`](reports/watchlist_latest.csv). Being on the list means "review this bank", not "this bank will fail": in back-testing, most flagged banks survived.
+
