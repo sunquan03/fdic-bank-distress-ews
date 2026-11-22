@@ -116,3 +116,7 @@ Most of the work in this project went into finding and handling these issues:
 - **Preprocessing:** median fill, 0.1/99.9% clipping, standardization. Every statistic is learned on train and applied unchanged to test and to today's data.
 - **Features (14 + 2 flags):** asset quality (nonperforming assets, loan-loss allowance, construction concentration), earnings (ROA, net interest margin, efficiency), funding (brokered, core, FHLB), capital (leverage), four-quarter trends of core deposits, nonperforming assets, ROA and leverage, plus `is_first_year` and `leverage_below_5_prc`.
 - **Evaluation:** equal-workload comparison against the baseline (accuracy is meaningless at a 0.3% positive rate), recall by quarters before failure, and lift on the cases the rule cannot see.
+
+---
+
+*Data: FDIC BankFind Suite API (public). Not affiliated with the FDIC. For personal project purposes, not supervisory advice.*
