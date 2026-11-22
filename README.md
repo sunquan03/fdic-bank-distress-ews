@@ -1,6 +1,6 @@
 # FDIC Bank Distress Early-Warning System
 
-Predicts which US banks will fail or need an assisted exit within the next 12 months using 25 years of public FDIC quarterly reports (2001–2026). 
+Predicts which US banks will fail or need an assisted exit within the next 12 months using 25 years of public FDIC quarterly reports (2001-2026). 
 
 async API ingest => DuckDB => dbt => model => watch list
 
@@ -8,7 +8,7 @@ Headline result : a one line regulatory rule (leverage below 5%) already catches
 
 ## Results
 
-Test period: 2010–2025 (362 408 bank quarters, 1 109 positives). The model is trained on 2001–2008 only.
+Test period: 2010-2025 (362 408 bank quarters, 1 109 positives). The model is trained on 2001-2008 only.
 
 ### Rule vs model at the same workload (3,706 flagged bank quarters)
 
@@ -100,7 +100,7 @@ Most of the work in this project went into finding and handling these issues:
 | **Censored labels.** The last 4 quarters' 12-month windows aren't finished. | 17529 rows | Label = null, cutoff computed from the latest report date (not today's date). Excluded from training. |
 | **Gap year.** 2008 rows' labels depend on 2009 outcomes. | - | Train <= 2008, test >= 2010; 2009 unused. |
 | **Leakage.** Exit dates are the answer. | - | Exit information is used only in the labels model and for grading lead time, never as a feature. Trends use `lag(…, 4)` only when the lagged report is exactly 12 months earlier; no forward-looking windows. |
-| **CBLR: risk-based capital "0".** Since 2020, community banks using the Community Bank Leverage Ratio stop reporting risk-based ratios. | 17–23 banks/yr with 0 before 2020, ~1,800–2,100 after | 0 or CBLR flag => null. Excluded from model features (train/test shift); leverage used instead. A test guards against the zeros coming back. |
+| **CBLR: risk-based capital "0".** Since 2020, community banks using the Community Bank Leverage Ratio stop reporting risk-based ratios. | 17-23 banks/yr with 0 before 2020, ~1,800-2,100 after | 0 or CBLR flag => null. Excluded from model features (train/test shift); leverage used instead. A test guards against the zeros coming back. |
 | **Leverage "0" = not reported.** | 25 institutions in training years, 0 failures; mostly insured US branches of foreign banks (classes OI/NC), which hold no separate capital | 0 => null, with a test. Removed ~1000 false alarms from the rule. |
 | **Non-lending institutions.** Trust companies and similar: ratios on loans are undefined. | 12233 zero-loan rows, 1 positive | Excluded from the training mart by a row-level rule (`gross_loans > 0` in that quarter), so no future information is used. |
 | **Negative capital.** | 172 rows, 79% labeled 1 | Kept: these are insolvent banks, the strongest signal in the data. |
@@ -116,6 +116,19 @@ Most of the work in this project went into finding and handling these issues:
 - **Preprocessing:** median fill, 0.1/99.9% clipping, standardization. Every statistic is learned on train and applied unchanged to test and to today's data.
 - **Features (14 + 2 flags):** asset quality (nonperforming assets, loan-loss allowance, construction concentration), earnings (ROA, net interest margin, efficiency), funding (brokered, core, FHLB), capital (leverage), four-quarter trends of core deposits, nonperforming assets, ROA and leverage, plus `is_first_year` and `leverage_below_5_prc`.
 - **Evaluation:** equal-workload comparison against the baseline (accuracy is meaningless at a 0.3% positive rate), recall by quarters before failure, and lift on the cases the rule cannot see.
+
+---
+
+## Repository structure
+
+```
+src/                 async FDIC API ingest (config, sources, fields, main)
+data/raw/            Parquet + raw JSON per source (not committed)
+data/fdic.duckdb     DuckDB database (not committed)
+fdic_ews/            dbt project: models/, seeds/, macros/, analyses/, tests
+notebooks/           01_model.ipynb – model, evaluation, watch list
+reports/             watchlist_latest.csv, figures/ (3 charts)
+```
 
 ---
 
