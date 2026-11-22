@@ -95,14 +95,24 @@ Most of the work in this project went into finding and handling these issues:
 | Issue | Evidence | Decision |
 |---|---|---|
 | **Defining an exit.** History holds every structural event, and the bank that ended is not always in `cert`. | Exit analyses | Use only the institution's own rows (`org_role = FI`); the bank that ended = `coalesce(outgoing_cert, cert)`; change codes classified in a seed; earliest exit wins, ties broken by severity. |
-| **Code 224 misclassified.** Affiliated-bank merger (a corporate reorganization) was labeled "assisted". | 195 banks | Reclassified as ordinary. Assisted exits: 1,018 → 823. |
-| **Credit unions in FDIC history.** Code 260 failures are mostly NCUA credit unions, which aren't FDIC banks. 2,550 failure exits have no FDIC institution record; 2,510 of them are code 260 | Kept in the seed. They have no financials, so they drop out at the spine join. |
-| **Censored labels.** The last 4 quarters' 12-month windows aren't finished. | 17,529 rows | Label = null, cutoff computed from the latest report date (not today's date). Excluded from training. |
-| **Gap year.** 2008 rows' labels depend on 2009 outcomes. | - | Train ≤ 2008, test ≥ 2010; 2009 unused. |
+| **Code 224 misclassified.** Affiliated-bank merger (a corporate reorganization) was labeled "assisted". | 195 banks | Reclassified as ordinary. Assisted exits: 1018 => 823. |
+| **Credit unions in FDIC history.** Code 260 failures are mostly NCUA credit unions, which aren't FDIC banks. 2550 failure exits have no FDIC institution record; 2510 of them are code 260 | Kept in the seed. They have no financials, so they drop out at the spine join. |
+| **Censored labels.** The last 4 quarters' 12-month windows aren't finished. | 17529 rows | Label = null, cutoff computed from the latest report date (not today's date). Excluded from training. |
+| **Gap year.** 2008 rows' labels depend on 2009 outcomes. | - | Train <= 2008, test >= 2010; 2009 unused. |
 | **Leakage.** Exit dates are the answer. | - | Exit information is used only in the labels model and for grading lead time, never as a feature. Trends use `lag(…, 4)` only when the lagged report is exactly 12 months earlier; no forward-looking windows. |
-| **CBLR: risk-based capital "0".** Since 2020, community banks using the Community Bank Leverage Ratio stop reporting risk-based ratios. | 17–23 banks/yr with 0 before 2020, ~1,800–2,100 after | 0 or CBLR flag → null. Excluded from model features (train/test shift); leverage used instead. A test guards against the zeros coming back. |
-| **Leverage "0" = not reported.** | 25 institutions in training years, 0 failures; mostly insured US branches of foreign banks (classes OI/NC), which hold no separate capital | 0 → null, with a test. Removed ~1,000 false alarms from the rule. |
-| **Non-lending institutions.** Trust companies and similar: ratios on loans are undefined. | 12,233 zero-loan rows, 1 positive | Excluded from the training mart by a row-level rule (`gross_loans > 0` in that quarter), so no future information is used. |
+| **CBLR: risk-based capital "0".** Since 2020, community banks using the Community Bank Leverage Ratio stop reporting risk-based ratios. | 17–23 banks/yr with 0 before 2020, ~1,800–2,100 after | 0 or CBLR flag => null. Excluded from model features (train/test shift); leverage used instead. A test guards against the zeros coming back. |
+| **Leverage "0" = not reported.** | 25 institutions in training years, 0 failures; mostly insured US branches of foreign banks (classes OI/NC), which hold no separate capital | 0 => null, with a test. Removed ~1000 false alarms from the rule. |
+| **Non-lending institutions.** Trust companies and similar: ratios on loans are undefined. | 12233 zero-loan rows, 1 positive | Excluded from the training mart by a row-level rule (`gross_loans > 0` in that quarter), so no future information is used. |
 | **Negative capital.** | 172 rows, 79% labeled 1 | Kept: these are insolvent banks, the strongest signal in the data. |
 | **Outliers.** | - | Clipped at train 0.1% / 99.9%. At 1% / 99%, clipping erased the weakest banks' leverage signal. |
 | **Parquet schema drift.** An all-null column was written with type NULL in early files. | `OTBFH1L` | Sources read with `union_by_name=true`. Proper fix (fixed schema at ingest) listed below. |
+
+
+---
+
+## Modeling choices
+
+- **Unit:** one bank-quarter. **Label:** failure or assisted exit within 12 months of the report date. **Population:** lending banks with labeled windows.
+- **Preprocessing:** median fill, 0.1/99.9% clipping, standardization. Every statistic is learned on train and applied unchanged to test and to today's data.
+- **Features (14 + 2 flags):** asset quality (nonperforming assets, loan-loss allowance, construction concentration), earnings (ROA, net interest margin, efficiency), funding (brokered, core, FHLB), capital (leverage), four-quarter trends of core deposits, nonperforming assets, ROA and leverage, plus `is_first_year` and `leverage_below_5_prc`.
+- **Evaluation:** equal-workload comparison against the baseline (accuracy is meaningless at a 0.3% positive rate), recall by quarters before failure, and lift on the cases the rule cannot see.
